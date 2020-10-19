@@ -21,9 +21,30 @@
     + Feature:
       - like hashMap in other languages
       - it's a pointer to struct
-      - not goroutine safe => should use mutex to sync
+      - not goroutine safe => should use mutex (Mutex, RWMutex) to sync
+      - read & read => safe 
+      - read & write or write & write => unsafe
+    + Code Demo:
+    ```golang
+        type syncMap struct {
+            sync.RWMutex,         
+            hashMap map[int]string
+        }
+        
+        hashMap := syncMap{1:"a"}
+        
+        RWMutex.RLock()
+        read = hashMap[1]
+        RWMutex.RUnLock()
+        
+        RWMutex.Lock()
+        hashmap[3] = "write"
+        RWMutex.UnLock()
+        
+    ```
       
 2. Reference in Go
  * Go has not ref variables, just value variables
 3. Concurrency: Goroutines, channels
-4. Async, Atomic, Context
+4. Mutex, RWMutex
+5. Async, Atomic, Context
