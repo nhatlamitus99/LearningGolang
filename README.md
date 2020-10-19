@@ -1,29 +1,26 @@
 # LearningGolang
 1. Collection: Array, Slice, List, Map:
  * Array
-    + Feature:
-      - data type and length 
-      - fixed length
-      - value type
-    
+    + Đặc điểm:
+      - mảng kích thước cố định
+      - xác định bằng kiểu dữ liệu và kích thước mảng
+    ```golang
+    [5]int != [5]string
+    [5]int != [4]int
+    ```
  * Slice
-    + Feature:
-      - flexible length, like arraylist in other languages
-      - it's a struct which contains pointer to base array, len, capacity
-      - if len > cap => cap = cap*2
-      - it's a struct contain pointer and lens
-      - when pass into func, slice pass by value so slice in func is a copy of original slice and both ref the same base array, so change is visible
+    + Đặc điểm:
+      - mảng kích thước động, tương tự ArrayList của ngôn ngữ khác
+      - nó là một struct chứa con trỏ trỏ đến array gốc, len, cap
+      - nếu append khi len > cap => cap := cap*2, re-allocate. 
  * List
-    + Feature:
-      - flexible length, implements linked-list 
- 
+    + Đặc điểm:
+      - kích thước động, triển khai cấu trúc danh sách liên kết đôi => chi phí truy cập tuyến tính.
  * Map
-    + Feature:
-      - like hashMap in other languages
-      - it's a pointer to struct
-      - not goroutine safe => should use mutex (Mutex, RWMutex) to sync
-      - read & read => safe 
-      - read & write or write & write => unsafe
+    + Đặc điểm:
+      - tương tự cấu trúc HashMap ở các ngôn ngữ khác
+      - nó là con trỏ trỏ đến một loại struct
+      - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize
     + Code Demo:
     ```golang
         func write(hashMap map[int]string, mutex *sync.RWMutex) {
@@ -52,7 +49,10 @@
     ```
       
 2. Reference in Go
- * Go has not ref variables, just value variables
+ * Go không có biến tham chiếu hay truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
 3. Concurrency: Goroutines, channels
 4. Mutex, RWMutex
+ * Mutex: chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resoure dùng chung.
+ * RWMutex: nhiều goroutine read được truy cập cùng lúc, các goroutine khác (read - write hay write - write) phải chờ có lock được release mới vào được resource chung.
+    Performance: RWMutex > Mutex
 5. Async, Atomic, Context
