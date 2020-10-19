@@ -26,21 +26,29 @@
       - read & write or write & write => unsafe
     + Code Demo:
     ```golang
-        type syncMap struct {
-            sync.RWMutex,         
-            hashMap map[int]string
+        func write(hashMap map[int]string, mutex *sync.RWMutex) {
+            mutex.Lock()
+            hashMap[2] = "write"
+            mutex.Unlock()
         }
-        
-        hashMap := syncMap{1:"a"}
-        
-        RWMutex.RLock()
-        read = hashMap[1]
-        RWMutex.RUnLock()
-        
-        RWMutex.Lock()
-        hashmap[3] = "write"
-        RWMutex.UnLock()
-        
+
+        func read(hashMap map[int]string, mutex *sync.RWMutex) {
+            mutex.RLock()
+            read := hashMap[1]
+            mutex.RUnlock()
+            fmt.Println("read: ", read)
+        }
+
+        func main() {
+            mutex := &sync.RWMutex{}
+            hashMap := make(map[int]string)
+            hashMap[1] = "a"
+            hashMap[2] = "b"
+            go write(hashMap, mutex)
+            go read(hashMap, mutex)
+            time.Sleep(time.Second)
+            fmt.Println("Golang")
+        }       
     ```
       
 2. Reference in Go
