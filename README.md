@@ -27,7 +27,7 @@
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
    + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
    + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
-3. Concurrency: Goroutines, channels
+3. Concurrency: Goroutine, Channel
  * Goroutine:
     + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
     + Chi phí switch context thấp
@@ -35,16 +35,8 @@
  * Channel:
     + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
     + Cơ chế: khi 1 goroutine gởi data vào channel thì chương trình sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho goroutine khác ghi data mới vào channel.
-    + Mở rộng: Channel Buffer: cho phép số lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine.
  * Code Demo:
-    ```golang
-    // init
-    channel := make(chan int)
-    // send data to channel
-    channel <- data_1
-    // receive data from channel
-    data_2 := <-channel  
-    ```
+ 
     Nếu không có goroutine nào send data đến channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
     ```golang
     func main() {
@@ -52,7 +44,23 @@
         data := <-ch
     }
     ```
-    Demo channel:
+    Trường hợp ghi và đọc data từ channel được thực hiện ở main goroutine sẽ dẫn đến deadlock
+    Vì khi 1 goroutine ghi data vào channel thì goroutine đó sẽ bị lock để chờ goroutine khác lấy data ra khỏi channel mới tiếp tục thực thi, nếu main bị lock thì chương trình sẽ rơi vào deadlock.
+    ```golang
+    func main() {
+        // init
+        ch := make(chan int) 
+        // send data
+        ch <- 10
+        // receive data
+        data := <- ch
+        // sleep
+        time.Sleep(time.Second)
+    }
+    ```
+    * Giải quyết vấn đề trên => Channel Buffer cho phép một số lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine dễ dẫn đến tình trạng deadlock.
+    
+    Demo goroutine vs channel:
     ```golang
     // demo
     func send(ch chan int) {
