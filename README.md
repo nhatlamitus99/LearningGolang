@@ -113,6 +113,13 @@
   * Đặc điểm:
     + Tránh tình trạng race condition, khi các goroutine truy cập vào biến chung khi biến đó chưa cập nhập xong giá trị.
     + Dùng để lock biến dùng chung giữa các goroutine, đảm bảo ở 1 thời điểm chỉ có 1 goroutine thay đổi giá trị của biến số nguyên dùng chung.
+  * Code Demo:
+  ```golang
+  // without atomic
+  count++   => có thể sai lệch trong quá trình nhiều goroutine cập nhật biến count (đọc ra -> sửa -> ghi lại)
+  // atomic
+  atomic.AddInt32(&count,1)
+  ```
    
 6. WaitGroup:
   * Đặc điểm: Dùng để đảm bảo một goroutine chính chờ các goroutine con chạy xong mới tiếp tục chạy.
@@ -126,5 +133,5 @@
   wg.Done()
   // goroutine chờ khi counter = 0 mới thực thi tiếp, nếu countert > 0 thì block goroutine chính.
   wg.Wait()
-6 Context
-7. Go Scheduler
+6. Context:
+7. Go Scheduler:
