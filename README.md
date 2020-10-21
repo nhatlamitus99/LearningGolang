@@ -35,17 +35,17 @@
  * Channel:
     + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
     + Cơ chế: khi 1 goroutine gởi data vào channel thì chương trình sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho goroutine khác ghi data mới vào channel.
- * Code Demo:
+ * Các trường hợp dẫn đến Deadlock khi sử dụng channel:
  
-    Nếu không có goroutine nào send data đến channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
+    + Nếu không có goroutine nào send data đến channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
     ```golang
     func main() {
         ch := make(chan int)
         data := <-ch
     }
     ```
-    Trường hợp ghi và đọc data từ channel được thực hiện ở main goroutine sẽ dẫn đến deadlock
-    Vì khi 1 goroutine ghi data vào channel thì goroutine đó sẽ bị lock để chờ goroutine khác lấy data ra khỏi channel mới tiếp tục thực thi, nếu main bị lock thì chương trình sẽ rơi vào deadlock.
+    + Trường hợp ghi và đọc data từ channel được thực hiện ở main goroutine sẽ dẫn đến deadlock
+    Vì khi 1 goroutine ghi data vào channel thì goroutine đó sẽ bị block để chờ goroutine khác lấy data ra khỏi channel mới tiếp tục thực thi, nếu main goroutine bị block thì chương trình sẽ rơi vào deadlock.
     ```golang
     func main() {
         // init
@@ -58,7 +58,7 @@
         time.Sleep(time.Second)
     }
     ```
-    * Giải quyết vấn đề trên => Channel Buffer cho phép một số lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine dễ dẫn đến tình trạng deadlock.
+    + Giải quyết vấn đề trên => Buffered Channel cho phép một lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine dễ dẫn đến tình trạng deadlock.
     
     Demo goroutine vs channel:
     ```golang
@@ -80,7 +80,7 @@
     }
     ```
 4. Sync
- * Mutex: chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resoure dùng chung.
+ * Mutex: dùng để lock 1 đoạn code, đảm bảo chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resource dùng chung.
  * RWMutex: nhiều goroutine read được truy cập cùng lúc, các goroutine khác (read - write hay write - write) phải chờ lock được release.
    => Performance: RWMutex > Mutex
    + Code Demo:
@@ -109,4 +109,22 @@
             fmt.Println("Golang")
         }       
     ```
-5. Async, Atomic, Context
+5. Atomic:
+  * Đặc điểm:
+    + Tránh tình trạng race condition, khi các goroutine truy cập vào biến chung khi biến đó chưa cập nhập xong giá trị.
+    + Dùng để lock biến dùng chung giữa các goroutine, đảm bảo ở 1 thời điểm chỉ có 1 goroutine thay đổi giá trị của biến số nguyên dùng chung.
+   
+6. WaitGroup:
+  * Đặc điểm: Dùng để đảm bảo một goroutine chính chờ các goroutine con chạy xong mới tiếp tục chạy.
+  * Code Demo:
+  ```golang
+  // init
+  wg := sync.WaitGroup
+  // set counter = 1
+  wg.Add(1)
+  // giảm counter xuống 1
+  wg.Done()
+  // goroutine chờ khi counter = 0 mới thực thi tiếp, nếu countert > 0 thì block goroutine chính.
+  wg.Wait()
+6 Context
+7. Go Scheduler
