@@ -20,8 +20,62 @@
     + Đặc điểm:
       - tương tự cấu trúc HashMap ở các ngôn ngữ khác
       - nó là con trỏ trỏ đến một loại struct
-      - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize
-    + Code Demo:
+      - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize.
+      
+2. Reference in Go
+ * Go không có biến tham chiếu hay truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
+ * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
+   + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
+   + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
+3. Concurrency: Goroutines, channels
+ * Goroutine:
+    + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
+    + Chi phí switch context thấp
+    + Được quản lí bởi Go runtime
+ * Channel:
+    + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
+    + Cơ chế: khi 1 goroutine gởi data vào channel thì chương trình sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho goroutine khác ghi data mới vào channel.
+    + Mở rộng: Channel Buffer: cho phép số lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine.
+ * Code Demo:
+    ```golang
+    // init
+    channel := make(chan int)
+    // send data to channel
+    channel <- data_1
+    // receive data from channel
+    data_2 := <-channel  
+    ```
+    Nếu không có goroutine nào send data đến channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
+    ```golang
+    func main() {
+        ch := make(chan int)
+        data := <-ch
+    }
+    ```
+    Demo channel:
+    ```golang
+    // demo
+    func send(ch chan int) {
+        ch <- 10
+    }
+
+    func receive(ch chan int) {
+        data := <-ch
+        fmt.Println(data)
+    }
+
+    func main() {
+        ch := make(chan int)
+        go send(ch)
+        go receive(ch)
+        time.Sleep(time.Second)
+    }
+    ```
+4. Sync
+ * Mutex: chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resoure dùng chung.
+ * RWMutex: nhiều goroutine read được truy cập cùng lúc, các goroutine khác (read - write hay write - write) phải chờ lock được release.
+   => Performance: RWMutex > Mutex
+   + Code Demo:
     ```golang
         func write(hashMap map[int]string, mutex *sync.RWMutex) {
             mutex.Lock()
@@ -47,32 +101,4 @@
             fmt.Println("Golang")
         }       
     ```
-      
-2. Reference in Go
- * Go không có biến tham chiếu hay truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
- * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
-   + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
-   + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
-3. Concurrency: Goroutines, channels
- * Goroutine:
-    + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
-    + Chi phí switch context thấp
-    + Được quản lí bởi Go runtime
- * Channel:
-    + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
-    + Cơ chế: khi 1 goroutine gởi data vào channel thì chương trình sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới tiếp tục cho goroutine khác ghi data vào channel.
-    + Mở rộng: Channel Buffer: cho phép số lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine.
- * Code Demo:
-    ```golang
-    // init
-    channel := make(chan int)
-    // send data to channel
-    channel <- data_1
-    // receive data from channel
-    data_2 := <-channel    
-    ```
-4. Sync
- * Mutex: chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resoure dùng chung.
- * RWMutex: nhiều goroutine read được truy cập cùng lúc, các goroutine khác (read - write hay write - write) phải chờ lock được release.
-   => Performance: RWMutex > Mutex
 5. Async, Atomic, Context
