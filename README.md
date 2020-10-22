@@ -13,6 +13,13 @@
       - mảng kích thước động, tương tự ArrayList của ngôn ngữ khác
       - nó là một struct chứa con trỏ trỏ đến array gốc, len, cap
       - nếu append khi len > cap => cap := cap*2, re-allocate. 
+    ```golang
+    type slice struct {
+        ptr unsafe.Pointer
+        len int
+        cap int
+    }
+    ```
  * List
     + Đặc điểm:
       - kích thước động, triển khai cấu trúc danh sách liên kết đôi => chi phí truy cập tuyến tính.
@@ -27,16 +34,16 @@
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
    + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
    + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
-3. Concurrency: Goroutine, Channel
- * Goroutine:uả
+3. Conic1currency: Goroutine, Channel
+ * Goroutine:
     + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
     + Chi phí switch context thấp
     + Được quản lí bởi Go runtime
- * Channel:uả
+ * Channel:
     + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
-    + Cơ chế: khi 1 goroutine gởi data vào channel thì chương trình sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho goroutine khác ghi data mới vào channel.
+    + Cơ chế: khi 1 goroutine gởi data vào channel thì goroutine đó sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho ghi data mới vào channel.
  * Các trường hợp dẫn đến Deadlock khi sử dụng channel:
-    + Nếu không có goroutine nào send data đến channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
+    + Nếu không có goroutine nào ghi data vào channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
     ```golang
     func main() {
         ch := make(chan int)
@@ -137,19 +144,35 @@
   * Đặc điểm:
     + Mỗi request gởi đến server sẽ được một goroutine đảm nhận xử lý. Trường hợp client tắt browser hoặc offline nếu server vẫn xử lý request để trả về response sẽ gây lãng phí => Context cung cấp các phương thức để xử lý request khi bị cancel hoặc timeout một cách hiệu quả.
     + Ví dụ minh họa:
-    ![alt text](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-20-25.jpg "Logo Title Text 1")
+    
+        - Server nhận request, sau đó query xuống database lấy data để xử lý rồi trả response về cho client:
+    ![pic1](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-20-25.jpg)
+    
+        - Luồng xử lý ở server:
+    ![pic2](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-33-41.jpg)
+    
+        - Khi request bij cancel, nếu không xử lý request cancel hoặc timeout thì sẽ lãng phí, giảm performance:
+    ![pic3](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-45-52.jpg)
+    
+        - Context giúp handle hiệu quả hơn:
+    ![pic4](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-55-44.jpg)
 
     + Code Demo:
     ```golang
+    // Tạo ra 1 context mới, đây là top-level context nên không bị cancel
     ctx_1 := context.Background()
-    // ctx_1 là root context, không bị cancel
     
+    // Tạo ra 1 context mới từ root context (ctx_1)
+        // set timeout là 2s => request sẽ cancel sau 2s
     ctx_2, err := context.WithTimeOut(ctx_1, 2*time.Second)
+        // set deadline => request sẽ cancel sau thời điểm này.
+    ctx_2, cancel := context.WithDeadline(ctx_1, time.Date(2020, time.November, 10, 23, 0, 0, 0, time.UTC))
+      
+    // Phát ra sự kiện cancel bằng context.WithCancel()
     ctx_3, err := context.WithCancel(ctx_1)
-    // ctx_2 và ctx_3 là derived context của ctx_1
     
-    ch := context.Done()
-    // context.Done() trả về 1 channel
+    // Lắng nghe sự kiện cancel, context.Done() trả về 1 channel
+    ch := <- context.Done()
     
     ```
 8. Go Scheduler:
