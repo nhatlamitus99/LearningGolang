@@ -35,6 +35,24 @@
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
    + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
    + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
+   
+3. Defer:
+ * Đặc điểm: 
+    + Câu lệnh sau defer sẽ được gọi ngay trước khi hàm chứa nó kết thúc.
+    + Giá trị params truyền vào hàm defer được lưu lại tại thời điểm truyền vào chứ không phải lúc surrounding func kết thúc.
+    + Khi nhiều defer được dùng thì lưu trữ theo cơ chế stack.
+ ```golang
+ func main() {
+    i := 0
+    defer fmt.Println(i)
+    i++
+    fmt.Println(i)
+    return
+}
+// output: 1 0
+ ```
+ 
+   
 3. Concurrency: Goroutine, Channel
  * Goroutine:
     + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
