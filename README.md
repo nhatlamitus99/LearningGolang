@@ -1,4 +1,15 @@
 # LearningGolang
+
+### 1. Collection
+### 2. Refference in Go
+### 3. Defer
+### 4. Concurrency: Goroutine, Channel
+### 5. Synchronize
+### 6. Atomic
+### 7. WaitGroup
+### 8. Context
+### 9. Go Scheduler
+
 1. Collection: Array, Slice, List, Map:
  * Array
     + Đặc điểm:
@@ -53,13 +64,13 @@
  ```
  
    
-3. Concurrency: Goroutine, Channel
+4. Concurrency: Goroutine, Channel
  * Goroutine:
-    + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
-    + Chi phí switch context thấp
+    + Goroutine gọn nhẹ hơn Thread, chiếm ít tài nguyên bộ nhớ (2KB)
+    + Chi phí switch context thấp hơn so với OS Thead
     + Được quản lí bởi Go runtime
  * Channel:
-    + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
+    + Là một biến đặc biệt để các Goroutine giao tiếp với nhau trong quá trình concurrency.
     + Cơ chế: khi 1 goroutine gởi data vào channel thì goroutine đó sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho ghi data mới vào channel.
  * Các trường hợp dẫn đến Deadlock khi sử dụng channel:
     + Nếu không có goroutine nào ghi data vào channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
@@ -104,7 +115,7 @@
         time.Sleep(time.Second)
     }
     ```
-4. Synchronize:
+5. Synchronize:
  * Mutex: dùng để lock 1 đoạn code, đảm bảo chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resource dùng chung.
  * RWMutex: nhiều goroutine read được truy cập cùng lúc, các goroutine khác (read - write hay write - write) phải chờ lock được release.
    => Performance: RWMutex > Mutex
@@ -134,7 +145,7 @@
             fmt.Println("Golang")
         }       
     ```
-5. Atomic:
+6. Atomic:
   * Đặc điểm:
     + Tránh tình trạng race condition, khi các goroutine truy cập vào biến chung khi biến đó chưa cập nhập xong giá trị.
     + Dùng để lock biến dùng chung giữa các goroutine, đảm bảo ở 1 thời điểm chỉ có 1 goroutine thay đổi giá trị của biến số nguyên dùng chung.
@@ -146,7 +157,7 @@
   atomic.AddInt32(&count,1)
   ```
    
-6. WaitGroup:
+7. WaitGroup:
   * Đặc điểm: Dùng để đảm bảo một goroutine chính chờ các goroutine con chạy xong mới tiếp tục chạy.
   * Code Demo:
   ```golang
@@ -159,7 +170,7 @@
   // goroutine chờ khi counter = 0 mới thực thi tiếp, nếu countert > 0 thì block goroutine chính.
   wg.Wait()
   ```
-7. Context:
+8. Context:
   * Đặc điểm:
     + Mỗi request gởi đến server sẽ được một goroutine đảm nhận xử lý. Trường hợp client tắt browser hoặc offline nếu server vẫn xử lý request để trả về response sẽ gây lãng phí => Context cung cấp các phương thức để xử lý request khi bị cancel hoặc timeout một cách hiệu quả.
     + Ví dụ minh họa:
@@ -194,4 +205,4 @@
     ch := <- context.Done()
     
     ```
-8. Go Scheduler:
+9. Go Scheduler:
