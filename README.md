@@ -11,7 +11,7 @@
  * Slice
     + Đặc điểm:
       - mảng kích thước động, tương tự ArrayList của ngôn ngữ khác
-      - nó là một struct chứa con trỏ trỏ đến array gốc, len, cap
+      - nó là một struct chứa con trỏ trỏ đến array gốc, length, capacity
       - nếu append khi len > cap => cap := cap*2, re-allocate. 
     ```golang
     type slice struct {
@@ -20,6 +20,7 @@
         cap int
     }
     ```
+    ![pic_0](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-10-37-06-13.jpg)
  * List
     + Đặc điểm:
       - kích thước động, triển khai cấu trúc danh sách liên kết đôi => chi phí truy cập tuyến tính.
@@ -34,7 +35,7 @@
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
    + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
    + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
-3. Conic1currency: Goroutine, Channel
+3. Concurrency: Goroutine, Channel
  * Goroutine:
     + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
     + Chi phí switch context thấp
@@ -85,7 +86,7 @@
         time.Sleep(time.Second)
     }
     ```
-4. Sync
+4. Synchronize:
  * Mutex: dùng để lock 1 đoạn code, đảm bảo chỉ có 1 goroutine (read hoặc write) được phép truy cập vào resource dùng chung.
  * RWMutex: nhiều goroutine read được truy cập cùng lúc, các goroutine khác (read - write hay write - write) phải chờ lock được release.
    => Performance: RWMutex > Mutex
