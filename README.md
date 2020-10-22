@@ -1,14 +1,14 @@
 # LearningGolang
 
 ### 1. Collections
-### 2. Refference in Go
+### 2. Reference in Go
 ### 3. Defer
 ### 4. Concurrency: Goroutine, Channel
 ### 5. Synchronize: Mutex
 ### 6. Atomic
 ### 7. WaitGroup
 ### 8. Context
-### 9. Go Scheduler
+### 9. Go Scheduler *
 
 
 
@@ -71,6 +71,10 @@
     + Goroutine gọn nhẹ hơn Thread, chiếm ít tài nguyên bộ nhớ (2KB)
     + Chi phí switch context thấp hơn so với OS Thead
     + Được quản lí bởi Go runtime
+    + Các trạng thái của goroutine:
+        - Waiting: trạng thái chờ lock từ goroutine khác (khi sử dụng atomic, mutex)
+        - Runable: sẵn sàng để được thực thi
+        - Executing: đang được thực thi
  * Channel:
     + Là một biến đặc biệt để các Goroutine giao tiếp với nhau trong quá trình concurrency.
     + Cơ chế: khi 1 goroutine gởi data vào channel thì goroutine đó sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho ghi data mới vào channel.
