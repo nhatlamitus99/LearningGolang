@@ -41,12 +41,12 @@
     + Đặc điểm:
       - tương tự cấu trúc HashMap ở các ngôn ngữ khác
       - nó là con trỏ trỏ đến một loại struct
-      - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize.
+      - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize (xem ví dụ ở phần 5: Synchonize: Mutex).
       
 2. Reference in Go
  * Go không truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
-   + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
+   + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó ở bên ngoài.
    + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
    
 3. Defer:
