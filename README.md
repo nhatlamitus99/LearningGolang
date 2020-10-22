@@ -23,20 +23,19 @@
       - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize.
       
 2. Reference in Go
- * Go không có biến tham chiếu hay truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
+ * Go không truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
    + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó bên ngoài.
    + Truyền slice, map vào func, những thay đổi trên data của chúng sẽ ảnh hướng đến slice, map đó ở bên ngoài vì slice chứa biến con trỏ, map là một con trỏ (bản gốc và bản copy đều có con trỏ trỏ đến cùng 1 vùng nhớ trong memory).
 3. Concurrency: Goroutine, Channel
- * Goroutine:
+ * Goroutine:uả
     + Goroutine gọn nhẹ, chiếm ít tài nguyên bộ nhớ (2KB)
     + Chi phí switch context thấp
     + Được quản lí bởi Go runtime
- * Channel:
+ * Channel:uả
     + Là một biến đặc biệt để các Goroutine giao tiếp với nhau khi truy cập vào shared memory
     + Cơ chế: khi 1 goroutine gởi data vào channel thì chương trình sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho goroutine khác ghi data mới vào channel.
  * Các trường hợp dẫn đến Deadlock khi sử dụng channel:
- 
     + Nếu không có goroutine nào send data đến channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
     ```golang
     func main() {
@@ -133,5 +132,24 @@
   wg.Done()
   // goroutine chờ khi counter = 0 mới thực thi tiếp, nếu countert > 0 thì block goroutine chính.
   wg.Wait()
-6. Context:
-7. Go Scheduler:
+  ```
+7. Context:
+  * Đặc điểm:
+    + Mỗi request gởi đến server sẽ được một goroutine đảm nhận xử lý. Trường hợp client tắt browser hoặc offline nếu server vẫn xử lý request để trả về response sẽ gây lãng phí => Context cung cấp các phương thức để xử lý request khi bị cancel hoặc timeout một cách hiệu quả.
+    + Ví dụ minh họa:
+    ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+    + Code Demo:
+    ```golang
+    ctx_1 := context.Background()
+    // ctx_1 là root context, không bị cancel
+    
+    ctx_2, err := context.WithTimeOut(ctx_1, 2*time.Second)
+    ctx_3, err := context.WithCancel(ctx_1)
+    // ctx_2 và ctx_3 là derived context của ctx_1
+    
+    ch := context.Done()
+    // context.Done() trả về 1 channel
+    
+    ```
+8. Go Scheduler:
