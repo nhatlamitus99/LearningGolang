@@ -137,7 +137,7 @@
   * Đặc điểm:
     + Mỗi request gởi đến server sẽ được một goroutine đảm nhận xử lý. Trường hợp client tắt browser hoặc offline nếu server vẫn xử lý request để trả về response sẽ gây lãng phí => Context cung cấp các phương thức để xử lý request khi bị cancel hoặc timeout một cách hiệu quả.
     + Ví dụ minh họa:
-    ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+    ![alt text](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-20-25.jpg "Logo Title Text 1")
 
     + Code Demo:
     ```golang
