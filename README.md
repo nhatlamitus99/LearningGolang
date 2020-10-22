@@ -1,14 +1,16 @@
 # LearningGolang
 
-### 1. Collection
+### 1. Collections
 ### 2. Refference in Go
 ### 3. Defer
 ### 4. Concurrency: Goroutine, Channel
-### 5. Synchronize
+### 5. Synchronize: Mutex
 ### 6. Atomic
 ### 7. WaitGroup
 ### 8. Context
 ### 9. Go Scheduler
+
+
 
 1. Collection: Array, Slice, List, Map:
  * Array
