@@ -1,7 +1,7 @@
 # LearningGolang
 
 ### 1. Collections
-### 2. Reference in Go
+### 2. Reference
 ### 3. Defer
 ### 4. Concurrency: Goroutine, Channel
 ### 5. Synchronize: Mutex
@@ -44,7 +44,7 @@
       - nó là con trỏ trỏ đến một loại struct
       - not goroutine safe => sử dụng mutex (Mutex, RWMutex) để synchronize (xem ví dụ ở phần 5: Synchonize: Mutex).
       
-2. Reference in Go
+2. Reference
  * Go không truyền params kiểu tham chiếu vào hàm, chỉ có truyền tham trị.
  * Khi truyền params vào trong hàm, thực chất là truyền 1 bản copy của các params đó.
    + Truyền array vào func, những thay đổi của array ở trong func ko ảnh hướng đến array đó ở bên ngoài.
@@ -262,7 +262,7 @@
     // run myTask sau mỗi 1 giây
     func executeCronJob() {
         gocron.Every(1).Second().Do(myTask)
-        <- gocron.Start()  // run tasks đã được schedule
+        <- gocron.Start()  // run tasks đã được scheduled
     }
     
     func main() {
