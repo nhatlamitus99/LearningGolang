@@ -8,7 +8,7 @@
 ### 6. Atomic
 ### 7. WaitGroup
 ### 8. Context
-### 9. Go Scheduler *
+### 9. Go Scheduler 
 
 
 
@@ -76,7 +76,7 @@
         - Runable: sẵn sàng để được thực thi
         - Executing: đang được thực thi
  * Channel:
-    + Là một biến đặc biệt để các Goroutine giao tiếp với nhau trong quá trình concurrency.
+    + Là một biến con trỏ đặc biệt để các Goroutine giao tiếp với nhau trong quá trình concurrency.
     + Cơ chế: khi 1 goroutine gởi data vào channel thì goroutine đó sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho ghi data mới vào channel.
  * Các trường hợp dẫn đến Deadlock khi sử dụng channel:
     + Nếu không có goroutine nào ghi data vào channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
@@ -100,7 +100,7 @@
         time.Sleep(time.Second)
     }
     ```
-    + Giải quyết vấn đề trên => Buffered Channel cho phép một lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine dễ dẫn đến tình trạng deadlock.
+    + Giải quyết các vấn đề trên => Buffered Channel cho phép một lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine dễ dẫn đến tình trạng deadlock.
     
     Demo goroutine vs channel:
     ```golang
@@ -212,3 +212,27 @@
     
     ```
 9. Go Scheduler:
+  + package gocron: dùng để run tasks theo định kỳ.
+  + Code Demo:
+  ```golang
+    import (
+        "fmt"
+        "github.com/jasonlvhit/gocron"
+        "time"
+    )
+    // task cần schedule
+    func myTask() {
+        fmt.Println("This task will run periodically")
+    }
+    
+    // run myTask sau mỗi 1 giây
+    func executeCronJob() {
+        gocron.Every(1).Second().Do(myTask)
+        <- gocron.Start()  // run tasks đã được schedule
+    }
+    
+    func main() {
+        go executeCronJob()
+        time.Sleep(10*time.Second)
+    }
+```
