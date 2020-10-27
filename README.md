@@ -78,7 +78,40 @@
  * Channel:
     + Là một biến con trỏ đặc biệt để các Goroutine giao tiếp với nhau trong quá trình concurrency.
     + Cơ chế: khi 1 goroutine gởi data vào channel thì goroutine đó sẽ chờ khi nào có 1 goroutine khác lấy data này đi mới có thể cho ghi data mới vào channel.
+    + Khi close channel thì nó không nhận data nữa, đọc data sẽ trả về zero-value.
+    + Khi goroutine read hoặc write vào channel thì bị block nhưng close channel thì goroutine không bị block.
+    + Unidirectional channel chỉ cho phép 1 chiều (đọc hoặc ghi) dữ liệu vào channel để kiểm soát chương trình tốt hơn. Có thể convert channel 2 chiều thành channel 1 chiều, trường hợp ngược lại không đúng.
+    + Code Demo :
+    ```golang
+    // param là channel 1 chiều
+    func greet(roc <-chan string) {
+	    fmt.Println("Hello " + <-roc + "!")
+    }
+
+    func main() {
+        fmt.Println("main() started")
+        // tạo channel 2 chiều
+        c := make(chan string)     
+        
+        // auto convert để truyền vào hàm greet hợp lệ
+        go greet(c)
+        
+        c <- "John"
+        fmt.Println("main() stopped")
+    }
+    ```
  * Các trường hợp dẫn đến Deadlock khi sử dụng channel:
+    + Select không có case nào được thực thi => sử dụng default case để tránh deadlock vì nó không bị block. Giải pháp khác là set timeout: time.After()
+    ```golang
+    select{
+    case <- ch1: 
+        //
+    case <- ch2: 
+        //
+    case <- time.After(2*time.Second) 
+        //
+    }
+    ```
     + Nếu không có goroutine nào ghi data vào channel mà có lệnh đọc data thì chương trình sẽ rơi vào trạng thái deadlock
     ```golang
     func main() {
@@ -100,24 +133,24 @@
         time.Sleep(time.Second)
     }
     ```
-    + Giải quyết các vấn đề trên => Buffered Channel cho phép một lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, thay vì chỉ có 1 goroutine dễ dẫn đến tình trạng deadlock.
+    + Giải quyết các vấn đề trên => Buffered Channel cho phép một lượng nhất định goroutines gởi data vào channel sau đó lấy data đó ra, block xảy ra khi đầy buffer nên hạn chế tình trạng deadlock.
     
     Demo goroutine vs channel:
     ```golang
-    // demo
-    func send(ch chan int) {
-        ch <- 10
-    }
-
-    func receive(ch chan int) {
-        data := <-ch
-        fmt.Println(data)
-    }
-
-    func main() {
+    func main()  {
         ch := make(chan int)
-        go send(ch)
-        go receive(ch)
+
+        go func(ch chan int) {
+            for i := 0; i < 10; i++ {
+                ch <- i
+            }
+            close(ch)
+        }(ch)
+
+        for value := range ch {
+            fmt.Println(value)
+        }
+
         time.Sleep(time.Second)
     }
     ```
@@ -174,7 +207,7 @@
   // giảm counter xuống 1
   wg.Done()
   // goroutine chờ khi counter = 0 mới thực thi tiếp, nếu countert > 0 thì block goroutine chính.
-  wg.Wait()
+  wg.Wait()  // goroutine bị block tại đây
   ```
 8. Context:
   * Đặc điểm:
