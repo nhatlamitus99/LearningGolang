@@ -278,13 +278,13 @@
   + Code Demo:
   ```golang
   type Job struct {
-  	id 		int
-	resource 	interface{}
+  	id 	int
+	resource interface{}
   }
   
   type Result struct {
-  	Job 		Job
-	Err 		error
+  	Job 	Job
+        Err 	error
   }
   
   type Pool struct {
@@ -304,11 +304,13 @@
   	// resources: danh sách các việc cần làm
   	// procFunc: hàm xử lý công việc
  	// resFunc: hàm xử lý khi nhận kết quả
-     // Logic phia trong ham Start:
+     
+  // kiểm tra đã hoàn thành all jobs
+  pool.IsCompleted() 
+  
+  	  // Logic phía trong hàm pool.Start():
 	  pool.allocate() // allocate jobs dựa vào array resources nhận được.
 	  pool.work() 	  // gọi hàm procFunc để xử lý các jobs.
 	  pool.collect()  // gọi hàm resFunc để xử lý kết quả trả về, báo completed all jobs.
-  // kiểm tra đã hoàn thành all jobs
-  pool.IsCompleted() 
   ```
   
