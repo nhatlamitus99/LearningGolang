@@ -9,7 +9,7 @@
 ### 7. WaitGroup
 ### 8. Context
 ### 9. Go Scheduler 
-### 10. Worker Pool *
+### 10. Worker Pool 
 
 
 
@@ -270,3 +270,9 @@
         time.Sleep(10*time.Second)
     }
 ```
+10. Worker Pool:
+  + package: dmora/workerpool
+  + Đặc điểm: pool dùng để quản lý resources và giao jobs cho các goroutine. 
+  
+  
+  
