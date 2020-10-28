@@ -246,7 +246,7 @@
     
     ```
 9. Go Scheduler:
-  + package gocron: dùng để run tasks theo định kỳ.
+  + package jasonlvhit/gocron: dùng để run tasks theo định kỳ.
   + Code Demo:
   ```golang
     import (
@@ -272,10 +272,29 @@
 ```
 10. Worker Pool:
   + package: dmora/workerpool
-  + Đặc điểm: pool dùng để quản lý resources và giao jobs cho các goroutines xử lý. 
+  + Đặc điểm: pool dùng để quản lý resources, tạo jobs từ các resources được đưa vào và giao jobs cho các goroutines xử lý. 
   ![pic_1](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-28-11-21-34-10.jpg)
   
   + Code Demo:
+  ```golang
+  type Job struct {
+  	id 		int
+	resource 	interface{}
+  }
+  
+  type Result struct {
+  	Job 		Job
+	Err 		error
+  }
+  
+  type Pool struct {
+  	numRoutines 	int
+	Jobs 		chan Job
+	Results 	chan Result
+	done		chan bool
+	complete	bool
+  }
+  ```
   ```golang
   // tạo worker pool để quán lý 3 resources
   pool := wokerpool.NewPool(3)
@@ -286,9 +305,9 @@
   	// procFunc: hàm xử lý công việc
  	// resFunc: hàm xử lý khi nhận kết quả
      // Logic phia trong ham Start:
-	  pool.allocate() => allocate jobs dựa vào array resources nhận được.
-	  pool.work() => gọi hàm procFunc để xử lý các jobs.
-	  pool.collect() => gọi hàm resFunc để xử lý kết quả trả về, báo completed all jobs.
+	  pool.allocate() // allocate jobs dựa vào array resources nhận được.
+	  pool.work() 	  // gọi hàm procFunc để xử lý các jobs.
+	  pool.collect()  // gọi hàm resFunc để xử lý kết quả trả về, báo completed all jobs.
   // kiểm tra đã hoàn thành all jobs
   pool.IsCompleted() 
   ```
