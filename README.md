@@ -273,7 +273,8 @@
 10. Worker Pool:
   + package: dmora/workerpool
   + Đặc điểm: pool dùng để quản lý resources, tạo jobs từ các resources được đưa vào và giao jobs cho các goroutines xử lý. 
-  => Tái sử dụng lại các goroutines (workers), tránh việc tạo nhiều goroutines. 
+  
+  => Tái sử dụng lại các goroutines (workers), tránh việc tạo quá nhiều goroutines gây lãng phí. 
   ![pic_1](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-28-11-21-34-10.jpg)
   
   + Code Demo:
@@ -290,14 +291,14 @@
   
   type Pool struct {
   	numRoutines 	int
-	Jobs 		chan Job
-	Results 	chan Result
-	done		chan bool
-	complete	bool
+        Jobs 		chan Job
+        Results 	chan Result
+        done		chan bool
+        complete	bool
   }
   ```
   ```golang
-  // tạo worker pool để quán lý 3 resources
+  // tạo worker pool chứa 3 goroutine để xử lý các resources
   pool := wokerpool.NewPool(3)
   
   // đưa resources vào pool và thực thi các job
