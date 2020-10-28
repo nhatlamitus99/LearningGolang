@@ -34,7 +34,7 @@
         cap int
     }
     ```
-    ![pic_0](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-10-37-06-13.jpg)
+    ![pic_0](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-22-10-37-06-13.jpg)
  * List
     + Đặc điểm:
       - kích thước động, triển khai cấu trúc danh sách liên kết đôi => chi phí truy cập tuyến tính.
@@ -216,16 +216,16 @@
     + Ví dụ minh họa:
     
         - Server nhận request, sau đó query xuống database lấy data để xử lý rồi trả response về cho client:
-    ![pic1](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-20-25.jpg)
+    ![pic1](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-22-09-28-20-25.jpg)
     
         - Luồng xử lý ở server:
-    ![pic2](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-33-41.jpg)
+    ![pic2](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-22-09-28-33-41.jpg)
     
         - Khi request bij cancel, nếu không xử lý request cancel hoặc timeout thì sẽ lãng phí, giảm performance:
-    ![pic3](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-45-52.jpg)
+    ![pic3](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-22-09-28-45-52.jpg)
     
         - Context giúp handle hiệu quả hơn:
-    ![pic4](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-22-09-28-55-44.jpg)
+    ![pic4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-22-09-28-55-44.jpg)
 
     + Code Demo:
     ```golang
@@ -275,7 +275,7 @@
   + package: dmora/workerpool
 
   => Tái sử dụng lại các goroutines (workers), tránh việc tạo quá nhiều goroutines gây lãng phí. 
-  ![pic_1](https://github.com/nhatlamitus99/LearningGolang/blob/main/Screenshot_2020-10-28-11-21-34-10.jpg)
+  ![pic_1](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-28-11-21-34-10.jpg)
   
   + Code Demo:
   ```golang
