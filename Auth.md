@@ -27,15 +27,19 @@
 4. Work flow to authen by JWT
 
       ![pic_3](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-11-08-53-22.jpg)
+      
+5. Work flow to refresh an expired access token
+    
+      ![pic-4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-17-54-31-64.jpg)
 
-5. What is OAuth ?
+6. What is OAuth ?
     - OAuth2.0 is an authorization framework that permit third-party app to access protected resources from resource server (like Google, Facebook, Github,...) without username, password from user.
     - 4 roles in oauth2.0:
         + Client (third-party app): where need resource
         + Resource Owner : user
         + Authorization Server : where validate delegation and return token to client
         + Resource Server : where store resource needing to share
-6. Work flow OAuth2.0:
+7. Work flow OAuth2.0:
 
       ![pic_4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
       
