@@ -18,13 +18,12 @@
     - Highly recommendation is that store jwt in Cookie and set flag HttpOnly to avoid XSS attacks.
     
 3. Access Token vs Refresh Token
-  + Access token is short life-span token uses for authenticating requests.
-    - if exp time is long => jwt is easier to be damaged by hacker
-    - if exp time is short => user must re-login more time
-    => Solution: Refresh Token
-  + Refresh token is long life-span token uses for generating new access token and refresh token periodically.
-  
-4. Work flow to Authentication via JWT
+      + Access token is short life-span token uses for authenticating requests.
+        - if exp time is long => jwt is easier to be damaged by hacker
+        - if exp time is short => user must re-login more time
+        => Solution: Refresh Token
+      + Refresh token is long life-span token uses for generating new access token and refresh token periodically.
 
+4. Work flow to Authentication via JWT
     ![pic_3](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-11-08-53-22.jpg)
 
