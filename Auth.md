@@ -13,7 +13,7 @@
        ![pic_2](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/IMG_20201030_095925.jpg)
     - Secret key: in case of jwt is decoded, signature is still secured by using secret key. 
     
-2. Store token ? 
+2. Store token
     - Tokens don't need to store at Server, just store at Client.
     - Highly recommendation is that store jwt in Cookie and set flag HttpOnly to avoid XSS attacks.
     
@@ -24,7 +24,7 @@
         => Solution: Refresh Token
       + Refresh token is long life-span token uses for generating new access token and refresh token periodically.
 
-4. Work flow to Authentication via JWT
+4. Work flow to authen by JWT
 
       ![pic_3](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-11-08-53-22.jpg)
 
@@ -35,7 +35,8 @@
         + Resource Owner : user
         + Authorization Server : where validate delegation and return token to client
         + Resource Server : where store resource needing to share
-        
+6. Work flow OAuth2.0:
+
       ![pic_4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
       
     
