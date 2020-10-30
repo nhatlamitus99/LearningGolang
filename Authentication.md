@@ -31,10 +31,10 @@
 5. What is OAuth ?
     - OAuth2.0 is an authorization framework that permit third-party app to access restricted resources from other app (like Google, Facebook, Github,...) without username, password from user.
     - 4 roles in oauth2.0:
-        + Client : where need user data 
+        + Client : where need resource
         + Resource Owner : user
         + Authorization Server : where verify delegation and return token to client
-        + Resource Server : where store user data needing to share
+        + Resource Server : where store resource needing to share
         
       ![pic_4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
       
