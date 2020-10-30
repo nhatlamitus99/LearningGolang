@@ -69,7 +69,7 @@
    
 4. Concurrency: Goroutine, Channel
  * Goroutine:
-    + Goroutine gọn nhẹ hơn Thread, chiếm ít tài nguyên bộ nhớ (2KB)
+    + Goroutine gọn nhẹ hơn Thread, chiếm ít tài nguyên bộ nhớ (init stack size = 2 KB) => Nếu goroutine cần nhiều stack space hơn thì stack space đó được copy sang một vùng nhớ khác và cấp phát gấp đôi stack size hiên tại của goroutine.
     + Chi phí switch context thấp hơn so với OS Thead
     + Được quản lí bởi Go runtime
     + Các trạng thái của goroutine:
