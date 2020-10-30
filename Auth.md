@@ -1,4 +1,4 @@
-# Authentication
+# Auth
 
 ### JWT
 ### OAuth2.0
