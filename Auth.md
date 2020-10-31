@@ -39,8 +39,12 @@
         + Resource Owner : user
         + Authorization Server : where validate delegation and return token to client
         + Resource Server : where store resource needing to share
-7. Work flow OAuth2.0:
+7. Workflow OAuth2.0:
 
       ![pic_4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
+      
+8. Authorization Code Grant:
+
+      ![pic_5](https://raw.githubusercontent.com/peter-evans/kong-oauth2-consent-app/master/resources/authorization-code-grant.png)
       
     
