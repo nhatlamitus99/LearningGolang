@@ -39,6 +39,12 @@
         + Resource Owner : user
         + Authorization Server : where validate delegation and return token to client
         + Resource Server : where store resource needing to share
+    - 4 types of grant in oauth2.0:
+        + Authorization Code Grant
+        + Implicit Grant
+        + Resource Owner Password Grant
+        + Client Credentials Grant
+        
 7. Workflow OAuth2.0:
 
       ![pic_4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
