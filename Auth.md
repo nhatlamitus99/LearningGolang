@@ -50,4 +50,8 @@
 
       ![pic_5](https://raw.githubusercontent.com/peter-evans/kong-oauth2-consent-app/master/resources/authorization-code-grant.png)
       
+8. Resource Owner Password Grant:
+
+      ![pic_6](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/oauth-2.0-resource-owner-password%20credentials-grant-process.png)
+      
     
