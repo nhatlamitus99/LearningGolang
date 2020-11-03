@@ -33,7 +33,7 @@
       ![pic-4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-17-54-31-64.jpg)
 
 6. What is OAuth ?
-    - OAuth2.0 is an authorization framework that permit third-party app to access protected resources from resource server (like Google, Facebook, Github,...) without username, password from user.
+    - OAuth2.0 is an authorization framework that permit third-party app to access protected resources from resource server.
     - 4 roles in oauth2.0:
         + Client (third-party app): where need resource
         + Resource Owner : user
@@ -45,11 +45,8 @@
         + Resource Owner Password Grant
         + Client Credentials Grant
         
-7. Workflow OAuth2.0:
-
-      ![pic_4](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
       
-8. Authorization Code Grant:
+7. Authorization Code Grant:
 
       ![pic_5](https://raw.githubusercontent.com/peter-evans/kong-oauth2-consent-app/master/resources/authorization-code-grant.png)
       
