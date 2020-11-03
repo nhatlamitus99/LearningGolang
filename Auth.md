@@ -48,7 +48,7 @@
       
 7. Authorization Code Grant:
 
-      ![pic_5](https://raw.githubusercontent.com/peter-evans/kong-oauth2-consent-app/master/resources/authorization-code-grant.png)
+      ![pic_5](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-10-30-15-48-56-35.jpg)
       
 8. Resource Owner Password Grant:
 
