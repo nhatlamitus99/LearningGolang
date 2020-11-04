@@ -31,3 +31,7 @@
     ![pic_2](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-11-04%20%5BMicroservice%5D%20C%C3%A1c%20kh%C3%A1i%20ni%E1%BB%87m%20ch%C3%ADnh%20trong%20microservice.png)
     - server-side: gọi đến load balancer => service registry => lấy thông tin service
     ![pic_3](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-11-04%20%5BMicroservice%5D%20C%C3%A1c%20kh%C3%A1i%20ni%E1%BB%87m%20ch%C3%ADnh%20trong%20microservice(1).png)
+
+5. Message Queue:
+  + RabbitMQ: gởi hàng nghìn messages / giây
+  + Kafka: gởi hàng triệu messages / giây
