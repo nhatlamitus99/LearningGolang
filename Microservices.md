@@ -21,8 +21,8 @@
   ![pic_1](https://github.com/nhatlamitus99/LearningGolang/blob/main/image/Screenshot_2020-11-04%20API%20Gateway%20l%C3%A0%20g%C3%AC%20T%E1%BA%A1i%20sao%20m%E1%BB%99t%20h%E1%BB%87%20th%E1%BB%91ng%20microservices%20l%E1%BA%A1i%20c%E1%BA%A7n%20API%20Gateway%20.png)
 
 3. Message: 
-  + sync message: service phản hồi ngay lập tức => sử dụng REST API
-  + asyn message: không yêu cầu phản hồi ngay => sử dụng AMQP
+  + sync message: yêu cầu service phản hồi ngay (cơ chế đông bộ) => sử dụng REST API hoặc gRPC
+  + asyn message: không yêu cầu phản hồi ngay (cơ chế bất đồng bộ) => sử dụng Message Queue
   
 4. Service Registry & Service Discovery:
   + Service Registry: Nơi chứa metadata của các services => tìm kiếm thông tin service thông qua service registry.
