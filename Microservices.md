@@ -34,5 +34,5 @@
   
 
 5. Message Queue:
-  + RabbitMQ: gởi hàng nghìn messages / giây
-  + Kafka: gởi hàng triệu messages / giây
+  + RabbitMQ (message broker): mỗi message được 1 consumer nhận và được xử lý 1 lần duy nhất, sau đó xóa khỏi queue. Xử lý được ít message cùng lúc so với kafka.
+  + Kafka (distributed : mỗi message có thể được xử lý nhiều lần vì sau khi được consumer nhận thì message vẫn còn trong queue đến khi timeout. Xử lý được nhiều message cùng lúc hơn RabbitMQ
